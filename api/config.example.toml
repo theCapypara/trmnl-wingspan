@@ -1,0 +1,7 @@
+wingsearch = "..." # path to the wingsearch repo
+default_images = "default"
+new_bird_interval = 600 # amount of seconds until a new bird is generated
+
+[images.default] # default image set
+path = "..." # path to default images
+#token = "..." # optional token required to retrieve images (`Authorization: Token <token>`)

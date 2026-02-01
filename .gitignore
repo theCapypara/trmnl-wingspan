@@ -1,4 +1,5 @@
 /assets
 /.idea
 /.stfolder
-/target
+target
+/api/config.toml

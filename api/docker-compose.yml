@@ -1,0 +1,6 @@
+services:
+  spannweite:
+    image: spannweite:latest
+    build: .
+    volumes:
+      - ./config.toml:/app/config.toml:ro
