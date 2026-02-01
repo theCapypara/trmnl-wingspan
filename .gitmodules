@@ -1,0 +1,4 @@
+[submodule "wingsearch"]
+	path = wingsearch
+	url = https://github.com/theCapypara/wingsearch
+	branch = german-flavor
