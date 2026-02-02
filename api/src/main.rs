@@ -94,6 +94,13 @@ fn cache_layer_long() -> SetResponseHeaderLayer<HeaderValue> {
     )
 }
 
+fn cors_allow_all() -> SetResponseHeaderLayer<HeaderValue> {
+    SetResponseHeaderLayer::overriding(
+        header::ACCESS_CONTROL_ALLOW_ORIGIN,
+        HeaderValue::from_static("*"),
+    )
+}
+
 #[tokio::main]
 async fn main() {
     let state = Arc::new(AppState::new());
@@ -129,6 +136,7 @@ async fn main() {
             "/icons",
             ServiceBuilder::new()
                 .layer(cache_layer_long())
+                .layer(cors_allow_all())
                 .service(ServeDir::new(
                     state.config.wingsearch.join("src/assets/icons/png"),
                 )),
@@ -137,6 +145,7 @@ async fn main() {
             "/fonts",
             ServiceBuilder::new()
                 .layer(cache_layer_long())
+                .layer(cors_allow_all())
                 .service(ServeDir::new(
                     state.config.wingsearch.join("src/assets/fonts"),
                 )),
