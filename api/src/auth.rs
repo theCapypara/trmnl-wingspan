@@ -1,4 +1,4 @@
-use axum::http::{Request, Response, StatusCode, header};
+use axum::http::{Request, Response, StatusCode};
 use std::marker::PhantomData;
 use tower_http::validate_request::ValidateRequest;
 
@@ -13,7 +13,7 @@ impl<ResBody> Clone for CheckToken<ResBody> {
 
 impl<ResBody> CheckToken<ResBody> {
     pub fn new(token: &str) -> Self {
-        Self(format!("Token {token}"), PhantomData)
+        Self(token.to_string(), PhantomData)
     }
 }
 
@@ -24,13 +24,15 @@ where
     type ResponseBody = ResBody;
 
     fn validate(&mut self, request: &mut Request<B>) -> Result<(), Response<Self::ResponseBody>> {
-        match request.headers().get(header::AUTHORIZATION) {
-            Some(actual) if actual == &self.0 => Ok(()),
-            _ => {
-                let mut res = Response::new(ResBody::default());
-                *res.status_mut() = StatusCode::UNAUTHORIZED;
-                Err(res)
+        let query_pairs =
+            form_urlencoded::parse(request.uri().query().unwrap_or_default().as_bytes());
+        for (k, v) in query_pairs {
+            if k == "token" && v == self.0 {
+                return Ok(());
             }
         }
+        let mut res = Response::new(ResBody::default());
+        *res.status_mut() = StatusCode::UNAUTHORIZED;
+        Err(res)
     }
 }

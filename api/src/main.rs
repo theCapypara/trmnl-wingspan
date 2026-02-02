@@ -13,6 +13,7 @@ use axum_extra::extract::Query;
 use chrono::{Timelike, Utc};
 use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
+use rand_chacha::rand_core::SeedableRng;
 use serde::Deserialize;
 use std::collections::HashMap;
 use std::fs::read_to_string;

@@ -10,7 +10,7 @@ Routes:
       to be only from these sets.
 - `GET /images/<image set>/<id>.png` - get bird image
     - `GET /images/_/<id>.png`: uses default image set
-    - some sets may need token authentication to use (`Authorization: Token <token>`)
+    - some sets may need token authentication to use (`?token=<token>`)
     - image sets configurable, see `api/config.toml`
 - `GET /icons/<icon_name>.png`
     - Icon names, see https://github.com/navarog/wingsearch/tree/master/src/assets/icons/png
