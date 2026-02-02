@@ -107,24 +107,30 @@ async fn main() {
     let state = Arc::new(AppState::new());
 
     let mut image_routers = Router::new();
+    let default = state
+        .config
+        .images
+        .get(&state.config.default_images)
+        .expect("default set invalid");
     for (set_name, set_spec) in &state.config.images {
         if set_name == "_" {
             panic!("_ not allowed.");
         }
+        let fallback = ServeDir::new(&default.path);
         if let Some(token) = &set_spec.token {
             image_routers = image_routers.nest_service(
                 &format!("/images/{set_name}"),
                 ServiceBuilder::new()
                     .layer(cache_layer_long())
                     .layer(ValidateRequestHeaderLayer::custom(CheckToken::new(token)))
-                    .service(ServeDir::new(&set_spec.path)),
+                    .service(ServeDir::new(&set_spec.path).fallback(fallback)),
             );
         } else {
             image_routers = image_routers.nest_service(
                 &format!("/images/{set_name}"),
                 ServiceBuilder::new()
                     .layer(cache_layer_long())
-                    .service(ServeDir::new(&set_spec.path)),
+                    .service(ServeDir::new(&set_spec.path).fallback(fallback)),
             );
         }
     }
