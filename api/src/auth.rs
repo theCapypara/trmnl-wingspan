@@ -1,6 +1,5 @@
 use axum::http::{Request, Response, StatusCode, header};
 use std::marker::PhantomData;
-use tower_http::auth::require_authorization::Bearer;
 use tower_http::validate_request::ValidateRequest;
 
 #[derive(Debug)]

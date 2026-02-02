@@ -133,6 +133,14 @@ async fn main() {
                     state.config.wingsearch.join("src/assets/icons/png"),
                 )),
         )
+        .nest_service(
+            "/fonts",
+            ServiceBuilder::new()
+                .layer(cache_layer_long())
+                .service(ServeDir::new(
+                    state.config.wingsearch.join("src/assets/fonts"),
+                )),
+        )
         .with_state(state);
 
     let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();

@@ -3,3 +3,4 @@
 /.stfolder
 target
 /api/config.toml
+.env

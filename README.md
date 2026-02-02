@@ -14,3 +14,5 @@ Routes:
     - image sets configurable, see `api/config.toml`
 - `GET /icons/<icon_name>.png`
     - Icon names, see https://github.com/navarog/wingsearch/tree/master/src/assets/icons/png
+- `GET /fonts/<font>`
+    - Font names, see https://github.com/navarog/wingsearch/tree/master/src/assets/fonts
