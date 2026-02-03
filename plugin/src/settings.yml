@@ -1,0 +1,141 @@
+#
+# Changes to this file will be overwritten by `trmnlp pull`.
+#
+# Docs: https://help.usetrmnl.com/en/articles/10542599-importing-and-exporting-private-plugins#h_581fb988f0
+#
+---
+name: Wingspan
+strategy: polling
+polling_verb: get
+polling_url: '{{ api_url }}/api/current?locale={{ locale }}{% for set in game_sets %}&allowed_set={{ set }}{% endfor %}'
+polling_headers: ''
+refresh_interval: 1440
+
+no_screen_padding: 'no'
+dark_mode: 'no'
+
+custom_fields:
+  - keyname: info
+    field_type: author_bio
+    name: About This Plugin
+    description: |
+      This plugin shows you bird information from the game Wingspan.
+
+      Please note that by default this plugin does not show the actual artwork on the cards for copyright reasons. You will need to host your own API server and host the images yourself.
+
+      See the GitHub link for the source code for the API server. The default API server selects a new bird every hour.
+
+      This plugin is powered by <a href="https://navarog.github.io/wingsearch/" target="_blank">Wingsearch</a>.
+    category: "entertainment,games"
+    github_url: "https://github.com/theCapypara/trmnl-wingspan"
+  - keyname: api_url
+    field_type: url
+    name: API URL
+    description: "This plugin uses an API server to fetch new bird information. Leave empty to use the default API server, which provides a new card every hour."
+    default: "https://wingspan.capypara.de"
+  - keyname: image_set
+    field_type: string
+    name: Image Set
+    description: The image set to use for card illustrations. Leave this empty when using the default API server. Blurred monochrome versions of the official card illustrations are used.
+  - keyname: image_set_password
+    field_type: password
+    name: Image Set Password
+    description: "When hosting your own server and images, you may want to protect access to them with a token (password). If so, enter this password. If you are using the default API server, leave this blank."
+  - keyname: game_sets
+    field_type: select
+    name: "Games & Extensions"
+    description: "What games & extensions should bird cards be pulled from? Leave this unselected, to use all released sets."
+    help_text: "Use <kbd>⌘</kbd>+<kbd>click</kbd> or <kbd>ctrl</kbd>+<kbd>click</kbd> to select and deselect multiple options."
+    options:
+      - Base game: core
+      - European: european
+      - Oceania: oceania
+      - Asia: asia
+      - Americas: americas
+      - Birds of Continental Europe promo pack: promoEurope
+      - Additional Asian Avians promo pack: promoAsia
+      - Birds of Canada promo pack: promoCA
+      - Birds of New Zealand promo pack: promoNZ
+      - British Birds promo pack: promoUK
+      - Birds of U.S.A. promo pack: promoUS
+    multiple: true
+  - keyname: locale
+    field_type: select
+    name: Localization
+    description: What localization (language) to use. This data is pulled from Wingsearch and might not be complete.
+    default: en
+    options:
+      - en
+      - de
+      - dk
+      - es
+      - fr
+      - jp
+      - lz
+      - nl
+      - pl
+      - pt
+      - tr
+      - uk
+  - keyname: image
+    field_type: boolean
+    name: Show image
+    default: "true"
+    optional: true
+  - keyname: flavor_texts
+    field_type: boolean
+    name: Show card flavor texts
+    default: "true"
+    optional: true
+  - keyname: power_texts
+    field_type: boolean
+    name: Show card power texts
+    default: "true"
+    optional: true
+  - keyname: scientific_names
+    field_type: boolean
+    name: Show scientific bird names
+    default: "true"
+    optional: true
+  - keyname: habitats
+    field_type: boolean
+    name: Show habitat icons
+    default: "true"
+    optional: true
+  - keyname: nest_type
+    field_type: boolean
+    name: Show nest type icon
+    default: "true"
+    optional: true
+  - keyname: egg_count
+    field_type: boolean
+    name: Show maximum egg count
+    default: "true"
+    optional: true
+  - keyname: victory_points
+    field_type: boolean
+    name: Show victory points
+    default: "true"
+    optional: true
+  - keyname: wingspan
+    field_type: boolean
+    name: Show wingspan
+    default: "true"
+    optional: true
+  - keyname: food_costs
+    field_type: boolean
+    name: Show food costs to play this card
+    default: "true"
+    optional: true
+  - keyname: continent
+    field_type: boolean
+    name: Show map icon
+    description: Map icon that shows where on the world this bird can be found
+    default: "true"
+    optional: true
+  - keyname: english_name
+    field_type: boolean
+    name: Show english name in bottom bar
+    description: Instead of the label "Wingspan", show the english name of the bird in the bottom bar.
+    default: "false"
+    optional: true

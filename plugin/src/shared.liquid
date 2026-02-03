@@ -1,0 +1,313 @@
+{% if trmnl.plugin_settings.custom_fields_values.image_set %}
+    {% assign _image_set = trmnl.plugin_settings.custom_fields_values.image_set %}
+{% else %}
+    {% assign _image_set = "_" %}
+{% endif %}
+{% if trmnl.plugin_settings.custom_fields_values.image_set_password %}
+    {% assign _image_set_add_token = "?token=" | append: trmnl.plugin_settings.custom_fields_values.image_set_password %}
+{% else %}
+    {% assign _image_set_add_token = "" %}
+{% endif %}
+<!--
+{% if info.can_live_wetland %}
+    {% increment _habitats_count %}
+{% endif %}
+{% if info.can_live_grassland %}
+    {% increment _habitats_count %}
+{% endif %}
+{% if info.can_live_forest %}
+    {% increment _habitats_count %}
+{% endif %}
+-->
+<style>
+    @font-face {
+        font-family: CardenioModernBold;
+        src: url('{{ trmnl.plugin_settings.custom_fields_values.api_url }}/fonts/CardenioModern-Bold.otf') format("opentype");
+        /* Cardenio Modern only supports Latin alphabet and some special characters */
+        unicode-range: U+0020-007E, U+00A1-00AC, U+00AE-0107, U+010A-0113, U+0116-011B, U+011E-0123, U+0126-0127, U+012A-012B, U+012E-0133, U+0136-0137, U+0139-013E, U+0141-0148, U+014A-014D, U+0150-015B, U+015E-0167, U+016A-016B, U+016E-017E, U+0218-021B, U+02C6-02C7, U+02C9, U+02D8-02DD, U+0300-0304, U+0306-0308, U+030A-030C, U+0326-0328, U+0335-0338, U+1E80-1E85, U+1E9E, U+1EF2-1EF3, U+2013-2014, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030, U+2039-203A, U+2044, U+207F, U+20AC, U+2116, U+2122, U+2190-2199, U+2202, U+2205, U+220F, U+2211-2212, U+221A, U+221E, U+222B, U+2248, U+2260, U+2264-2265, U+25CA;
+    }
+
+    @font-face {
+        /* Silici Strong is used as fallback for Cardenio Modern Bold for Cyrillic alphabets */
+        font-family: SiliciStrong;
+        src: url('{{ trmnl.plugin_settings.custom_fields_values.api_url }}/fonts/SiliciBold.ttf') format("opentype");
+        size-adjust: 110%;
+    }
+
+    @font-face {
+        font-family: ThirstyRoughLt;
+        src: url('{{ trmnl.plugin_settings.custom_fields_values.api_url }}/fonts/ThirstyRoughLt.otf') format("opentype");
+    }
+
+    .power-text {
+        hyphens: auto;
+        overflow-wrap: anywhere;
+    }
+
+    .birdtitle, .powertitle {
+        font-family: CardenioModernBold, SiliciStrong, sans-serif;
+    }
+
+    .powertitle {
+        font-size: 1.1em;
+        text-transform: uppercase;
+    }
+
+    .scientifictitle {
+        font-family: ThirstyRoughLt, Arial, Helvetica;
+    }
+
+    .icon-image {
+        position: relative;
+        max-height: 1.1em;
+        max-width: 1.1em;
+        bottom: -0.15em;
+    }
+
+    .small-icons .icon-image {
+        position: relative;
+        max-height: .75em;
+        max-width: .75em;
+        bottom: -0.05em;
+    }
+
+    p {
+        /* When using data-content-max-height we never want the pre-line white-space handling. */
+        white-space: initial !important;
+    }
+
+    .no-text {
+        font-size: 0;
+    }
+
+    .habitats img {
+        width: 32px;
+    }
+
+    .habitats .habitats--3 {
+        width: 64px;
+        height: 48px;
+        position: relative;
+    }
+
+    .habitats .habitats--3 * {
+        position: absolute;
+    }
+
+    .habitats .habitats--3 :nth-child(1) {
+        left: 0px;
+        bottom: 0px;
+    }
+
+    .habitats .habitats--3 :nth-child(2) {
+        left: 16px;
+        top: 0px;
+    }
+
+    .habitats .habitats--3 :nth-child(3) {
+        left: 32px;
+        bottom: 0px;
+    }
+
+    .nest-type {
+        height: 24px;
+    }
+
+    .continent {
+        position: relative;
+        height: 56px;
+        width: 102px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .continent img {
+        height: 56px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .wingspan {
+        max-height: 8px;
+    }
+
+    .bird-image {
+        max-width: 100%;
+        max-height: 82%;
+        aspect-ratio: 1;
+        overflow: auto;
+    }
+
+    .bird-image.bird-image--30 {
+        max-height: 30%;
+    }
+
+    .bird-image.bird-image--100 {
+        max-height: 100%;
+    }
+
+    .no-gap {
+        gap: 0;
+    }
+
+    .title_bar image {
+        filter: contrast(10000%) saturate(0%);
+    }
+
+    /* SMALLER */
+
+    .layout.layout--smaller {
+    }
+
+    .layout.layout--smaller .icon-image {
+        position: relative;
+        max-height: .8em;
+        max-width: .8em;
+        bottom: -0.06em;
+    }
+
+    .layout.layout--smaller .small-icons .icon-image {
+        position: relative;
+        max-height: .65em;
+        max-width: .65em;
+        bottom: -0.04em;
+    }
+
+    .layout.layout--smaller .habitats img {
+        width: 16px;
+    }
+
+    .layout.layout--smaller .habitats .habitats--3 {
+        width: 32px;
+        height: 24px;
+        position: relative;
+    }
+
+    .layout.layout--smaller .habitats .habitats--3 :nth-child(2) {
+        left: 8px;
+        top: 0px;
+    }
+
+    .layout.layout--smaller .habitats .habitats--3 :nth-child(3) {
+        left: 16px;
+        bottom: 0px;
+    }
+
+    .layout.layout--smaller .continent {
+        height: 28px;
+        width: 51px;
+    }
+
+    .layout.layout--smaller .continent img {
+        height: 28px;
+    }
+</style>
+{% comment %} Based on the code from Wingsearch {% endcomment %}
+<script type="module" data-id="{{ instance_id }}">
+    const NON_SEPARATION_SPECIAL_CHARACTERS = ['\\.', ',', ';', '\\-', '\\_', '\\)'];
+    const NON_SEPARATION_SPECIAL_CHARACTERS_REGEX = NON_SEPARATION_SPECIAL_CHARACTERS.join('|');
+
+    const BASE_HTML_STRING = `<img class="icon-image image image-stroke" src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/$1.png">`;
+    const NOBR_HTML_STRING = `<span class="nobr">` + BASE_HTML_STRING + `$2` + `</span>`;
+
+    const food = {
+        invertebrate: {{ info.food_invertebrate | default: 0 }},
+        seed: {{ info.food_seed | default: 0 }},
+        fruit: {{ info.food_fruit | default: 0 }},
+        fish: {{ info.food_fish | default: 0 }},
+        rodent: {{ info.food_rodent | default: 0 }},
+        nectar: {{ info.food_nectar | default: 0 }},
+        wild: {{ info.food_wild | default: 0 }}
+    }
+
+    {% if trmnl.plugin_settings.custom_fields_values.food_costs == "true" %}
+    document.querySelector("#foodcost").textContent = ({{ info.food_cost_has_note | default: "false" }} ? '* ' : '') + Object.entries(food)
+        .reduce((acc, val) => ([...acc, ...Array.from({length: val[1]}, () => `[${val[0]}]`)]), [])
+        .join({{ info.food_cost_is_either | default: "false" }} ? '/' : '+') || '[no-food]';
+    {% endif %}
+
+    document.querySelectorAll(".iconize").forEach(iconElem => {
+        iconElem.innerHTML = iconElem.innerHTML
+            .replace(new RegExp('\\[([a-z\\-\\_]+)\\]' + '(?!' + NON_SEPARATION_SPECIAL_CHARACTERS_REGEX + ')', 'g'), BASE_HTML_STRING)
+            .replace(new RegExp('\\[([a-z\\-\\_]+)\\]' + '(' + NON_SEPARATION_SPECIAL_CHARACTERS_REGEX + ')', 'g'), NOBR_HTML_STRING)
+        ;
+    })
+
+    const textMap = {
+        brown: {
+            en: 'WHEN ACTIVATED',
+            de: 'Bei Aktivierung',
+            dk: 'N\u00c5R KORTET AKTIVERES',
+            es: 'AL ACTIVARLA',
+            fr: 'ACTIVATION',
+            jp: '\u8d77\u52d5\u6642',
+            lt: 'AKTYVAVUS',
+            nl: 'ALS GEACTIVEERD',
+            pl: 'Gdy aktywujesz',
+            pt: 'QUANDO ATIVADO',
+            uk: '\u041f\u0440\u0438 \u0430\u043a\u0442\u0438\u0432\u0430\u0446\u0456\u0457',
+
+        },
+        white: {
+            en: 'WHEN PLAYED',
+            de: 'Beim Ausspielen',
+            dk: 'N\u00c5R KORTET SPILLES',
+            es: 'AL JUGARLA',
+            fr: 'POSE',
+            jp: '\u30d7\u30ec\u30a4\u6642',
+            lt: 'PAD\u0116JUS',
+            nl: 'ALS GESPEELD',
+            pl: 'Gdy zagrywasz',
+            pt: 'QUANDO JOGADO',
+            uk: '\u041f\u0440\u0438 \u0440\u043e\u0437\u0456\u0433\u0440\u0430\u0448\u0456',
+        },
+        pink: {
+            en: 'ONCE BETWEEN TURNS',
+            de: '1x zwischen deinen Z\u00fcgen',
+            dk: '\u00c9N GANG I MELLEM TURE',
+            es: 'UNA VEZ ENTRE TURNOS',
+            fr: '1 FOIS ENTRE 2 TOURS',
+            jp: '\u6b21\u306e\u624b\u756a\u307e\u3067\u306b\uff11\u56de',
+            lt: 'KART\u0104 TARP \u0116JIM\u0172',
+            nl: 'EENMALIG TUSSEN BEURTEN',
+            pl: 'Raz mi\u0119dzy turami',
+            pt: 'UMA VEZ ENTRE TURNOS',
+            uk: '\u0420\u0430\u0437 \u043c\u0456\u0436 \u0445\u043e\u0434\u0430\u043c\u0438',
+        },
+        teal: {
+            en: 'ROUND END',
+            de: 'Am Rundenende',
+            dk: 'N\u00c5R RUNDEN ER SLUT',
+            es: 'FIN DE LA RONDA',
+            fr: 'FIN DE MANCHE',
+            jp: '\u30e9\u30a6\u30f3\u30c9\u7d42\u4e86\u6642',
+            lt: 'BAIGUS RAUND\u0104',
+            nl: 'EINDE RONDE',
+            pl: 'Koniec rundy',
+            pt: 'FIM DA RODADA',
+            uk: '\u041d\u0430\u043f\u0440\u0438\u043a\u0456\u043d\u0446\u0456 \u0440\u0430\u0443\u043d\u0434\u0443',
+        },
+        yellow: {
+            en: 'GAME END',
+            de: 'Am Spielende',
+            dk: 'SPILLETS AFSLUTNING',
+            es: 'FIN DE LA PARTIDA',
+            fr: 'FIN DE PARTIE',
+            jp: '\u30b2\u30fc\u30e0\u7d42\u4e86\u6642',
+            lt: 'BAIGUS \u017dAIDIM\u0104',
+            nl: 'EINDE SPEL',
+            pl: 'Koniec gry',
+            pt: 'FIM DO JOGO',
+            uk: '\u0412 \u043a\u043e\u043d\u0446\u0435 \u0438\u0433\u0440\u044b',
+        }
+    };
+
+    {% if info.color %}
+    let entry = textMap["{{ info.color }}"]["en"];
+    if (textMap["{{ info.color }}"].hasOwnProperty("{{ trmnl.plugin_settings.custom_fields_values.locale }}")) {
+        entry = textMap["{{ info.color }}"]["{{ trmnl.plugin_settings.custom_fields_values.locale }}"];
+    }
+    document.querySelector("#powerintro").textContent = entry;
+    {% endif %}
+</script>

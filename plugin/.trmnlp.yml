@@ -1,0 +1,33 @@
+# TRMNLP configuration
+# {{ env.VARIABLE }} interpolation is available here
+---
+# auto-reload when files change (`watch: false` to disable)
+watch:
+  - .trmnlp.yml
+  - src
+
+# values of custom fields (defined in src/settings.yml)
+custom_fields:
+  api_url: https://wingspan.capypara.de
+  image_set: "default"
+  image_set_password: ""
+  #game_sets:
+  #  - core
+  #  - oceania
+  locale: "de"
+  image: "true"
+  flavor_texts: "true"
+  power_texts: "true"
+  scientific_names: "true"
+  habitats: "true"
+  nest_type: "true"
+  egg_count: "true"
+  victory_points: "true"
+  wingspan: "true"
+  food_costs: "true"
+  continent: "true"
+  english_name: "true"
+
+# override variables
+variables:
+  trmnl: { }

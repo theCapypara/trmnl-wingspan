@@ -1,0 +1,153 @@
+<div class="layout outline">
+    <div class="columns">
+        <div class="column stretch">
+            <div class="flex flex--col flex--center gap">
+                {% if trmnl.plugin_settings.custom_fields_values.image == "true" %}
+                    <img class="image image-dither image--contain stretch-x bird-image"
+                         src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/images/{{ _image_set }}/{{ info.id }}.png{{ _image_set_add_token }}">
+                {% endif %}
+                <div class="flex flex--row stretch-x flex--between px--4">
+                    <div class="pb--1">
+                        {% if trmnl.plugin_settings.custom_fields_values.victory_points == "true" %}
+                            <span class="title birdtitle iconize">{{ info.victory_points | floor }}[point]</span>
+                        {% endif %}
+                    </div>
+                    {% if trmnl.plugin_settings.custom_fields_values.wingspan == "true" %}
+                        <div class="flex flex--col flex--center-y no-gap">
+                            <span class="description birdtitle">{{ info.wingspan }} cm</span>
+                            <img class="image wingspan"
+                                 src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/wingspan.png">
+                        </div>
+                    {% endif %}
+                    <div class="flex flex--row gap--large">
+                        {% if trmnl.plugin_settings.custom_fields_values.nest_type == "true" %}
+                            <img class="image image-stroke nest-type"
+                                 src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/{{ info.nest_type }}.png">
+                        {% endif %}
+                        <div class="flex flex-row">
+                            {% if trmnl.plugin_settings.custom_fields_values.egg_count == "true" %}
+                                {% assign _egg_limit = info.egg_limit | floor %}
+                                {% for _ in (0.._egg_limit) %}
+                                    <img class="image image-stroke nest-type"
+                                         src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/smallegg.png">
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column gap--large stretch">
+            <div class="flex gap--large flex--center-x flex--center-y">
+                {% if trmnl.plugin_settings.custom_fields_values.habitats == "true" or trmnl.plugin_settings.custom_fields_values.food_costs == "true" %}
+                    <div class="flex flex--col flex--center-y bg--gray-75 rounded gap-large text-stroke pt--2">
+                        {% if trmnl.plugin_settings.custom_fields_values.habitats == "true" %}
+                            <div class="habitats no-text px--2 {% if trmnl.plugin_settings.custom_fields_values.food_costs != "true" %}pb--2{% endif %}">
+                                <div class="habitats--{% increment _habitats_count %}">
+                                    {% if info.can_live_wetland %}
+                                        <img class="image"
+                                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/wetland.png">
+                                    {% endif %}
+                                    {% if info.can_live_grassland %}
+                                        <img class="image"
+                                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/grassland.png">
+                                    {% endif %}
+                                    {% if info.can_live_forest %}
+                                        <img class="image"
+                                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/forest.png">
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if trmnl.plugin_settings.custom_fields_values.food_costs == "true" %}
+                            <span class="description iconize mx--2 mb--2 small-icons" id="foodcost"></span>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <div class="outline p--2 flex flex--col">
+                    <span class="title birdtitle">{{ common_name }}</span>
+                    {% if trmnl.plugin_settings.custom_fields_values.scientific_names == "true" %}
+                        <span class="title title--small scientifictitle">{{ scientific_name }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="richtext gap--large">
+                {% if trmnl.plugin_settings.custom_fields_values.power_texts == "true" and info.color %}
+                    <div class="content content--left gap text--left flex--row flex--top bg--gray-75 p--4 text-stroke"
+                         data-content-limiter="true" data-content-max-height="130">
+                        <p class="iconize flex--col">
+                            {% if info.power_is_predator %}
+                                [predator]
+                            {% endif %}
+                            {% if info.power_is_flocking %}
+                                [flocking]
+                            {% endif %}
+                            {% if info.power_is_bonus_card_related %}
+                                [bonus_cards]
+                            {% endif %}
+                        </p>
+                        <p class="power-text">
+                            <span class="powertitle" id="powerintro"></span>:
+                            <span class="iconize">{{ power_text }}</span>
+                        </p>
+                    </div>
+                {% endif %}
+                {% if trmnl.plugin_settings.custom_fields_values.flavor_texts == "true" %}
+                    <div class="content content--center gap text--center" data-content-limiter="true"
+                         data-content-max-height="100">
+                        <p>{{ flavor_text }}</p>
+                    </div>
+                {% endif %}
+            </div>
+            {% if trmnl.plugin_settings.custom_fields_values.continent == "true" %}
+                <div class="continent no-text">
+                    <img class="image" src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/map.png">
+                    {% if info.lives_in_north_america %}
+                        <img class="image"
+                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/map_na.png">
+                    {% endif %}
+                    {% if info.lives_in_central_america %}
+                        <img class="image"
+                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/map_amn.png">
+                    {% endif %}
+                    {% if info.lives_in_south_america %}
+                        <img class="image"
+                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/map_ams.png">
+                    {% endif %}
+                    {% if info.lives_in_europe %}
+                        <img class="image"
+                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/map_e.png">
+                    {% endif %}
+                    {% if info.lives_in_asia %}
+                        <img class="image"
+                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/map_a.png">
+                    {% endif %}
+                    {% if info.lives_in_africa %}
+                        <img class="image"
+                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/map_af.png">
+                    {% endif %}
+                    {% if info.lives_in_oceania %}
+                        <img class="image"
+                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/map_o.png">
+                    {% endif %}
+                    {% if info.lives_in_antarctica %}
+                        <img class="image"
+                             src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/map_an.png">
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="title_bar">
+    <img class="image" src="https://wingspan.capypara.de/icons/egg.png">
+    <span class="title">
+        {% if trmnl.plugin_settings.custom_fields_values.english_name == "true" %}
+            {{ info.common_name }}
+        {% else %}
+            Wingspan
+        {% endif %}
+    </span>
+    <span class="instance">{{ trmnl.plugin_settings.instance_name }}</span>
+</div>
