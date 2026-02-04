@@ -43,8 +43,8 @@ custom_fields:
     description: "When hosting your own server and images, you may want to protect access to them with a token (password). If so, enter this password. If you are using the default API server, leave this blank."
   - keyname: game_sets
     field_type: select
-    name: "Games & Extensions"
-    description: "What games & extensions should bird cards be pulled from? Leave this unselected, to use all released sets."
+    name: "Games & Expansions"
+    description: "What games & expansions should bird cards be pulled from? Leave this unselected, to use all released sets."
     help_text: "Use <kbd>⌘</kbd>+<kbd>click</kbd> or <kbd>ctrl</kbd>+<kbd>click</kbd> to select and deselect multiple options."
     options:
       - Base game: core
