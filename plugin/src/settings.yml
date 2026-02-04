@@ -65,18 +65,18 @@ custom_fields:
     description: What localization (language) to use. This data is pulled from Wingsearch and might not be complete.
     default: en
     options:
-      - en
-      - de
-      - dk
-      - es
-      - fr
-      - jp
-      - lz
-      - nl
-      - pl
-      - pt
-      - tr
-      - uk
+      - English: en
+      - German: de
+      - Danish: dk
+      - Spanish: es
+      - French: fr
+      - Japanese: jp
+      - Lithuanian: lt
+      - Dutch: nl
+      - Polish: pl
+      - Portuguese: pt
+      - Turkish: tr
+      - Ukrainian: uk
   - keyname: image
     field_type: boolean
     name: Show image
