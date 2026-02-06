@@ -9,7 +9,9 @@ use axum::extract::{Path, State};
 use axum::http::{HeaderMap, HeaderValue, header};
 use axum::response::{IntoResponse, Redirect};
 use axum::{Json, Router, routing::get};
+use axum_extra::TypedHeader;
 use axum_extra::extract::Query;
+use axum_extra::headers::Host;
 use chrono::{Timelike, Utc};
 use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
@@ -51,6 +53,7 @@ struct GetCurrentParams {
 async fn get_current(
     State(state): State<Arc<AppState>>,
     query: Query<GetCurrentParams>,
+    host: Option<TypedHeader<Host>>,
 ) -> impl IntoResponse {
     let now = Utc::now().num_seconds_from_midnight();
     let time_idx = now / state.config.new_bird_interval;
@@ -62,11 +65,17 @@ async fn get_current(
 
     let mut rng = ChaCha8Rng::seed_from_u64(time_idx as u64);
 
-    let birds = state.birds_db.values().filter(|bird| {
-        query.allowed_set.is_empty() || query.allowed_set.contains(&bird.master.set)
-    });
-    let Some(chosen) = birds.choose(&mut rng) else {
-        return (HeaderMap::new(), Json(None));
+    let host = host.map(|h| h.0.hostname().to_string()).unwrap_or_default();
+    let chosen = if host.starts_with("demo") {
+        state.birds_db.get("220").unwrap()
+    } else {
+        let birds = state.birds_db.values().filter(|bird| {
+            query.allowed_set.is_empty() || query.allowed_set.contains(&bird.master.set)
+        });
+        let Some(chosen) = birds.choose(&mut rng) else {
+            return (HeaderMap::new(), Json(None));
+        };
+        chosen
     };
 
     let mut headers = HeaderMap::new();
