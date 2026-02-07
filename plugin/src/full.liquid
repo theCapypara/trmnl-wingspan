@@ -21,8 +21,13 @@
                     {% endif %}
                     <div class="flex flex--row gap--large">
                         {% if trmnl.plugin_settings.custom_fields_values.nest_type == "true" %}
+                            {% if info.nest_type == "wild" %}
+                                {% assign _nest_type = "star" %}
+                            {% else %}
+                                {% assign _nest_type = info.nest_type %}
+                            {% endif %}
                             <img class="image image-stroke nest-type"
-                                 src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/{{ info.nest_type }}.png">
+                                 src="{{ trmnl.plugin_settings.custom_fields_values.api_url }}/icons/{{ _nest_type }}.png">
                         {% endif %}
                         <div class="flex flex-row">
                             {% if trmnl.plugin_settings.custom_fields_values.egg_count == "true" %}

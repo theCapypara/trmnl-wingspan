@@ -31,16 +31,18 @@ custom_fields:
   - keyname: api_url
     field_type: url
     name: API URL
-    description: "This plugin uses an API server to fetch new bird information. Leave empty to use the default API server, which provides a new card every hour."
+    description: "This plugin uses an API server to fetch new bird information. Leave to use the default API server, which provides a new card every hour."
     default: "https://wingspan.capypara.de"
   - keyname: image_set
     field_type: string
     name: Image Set
     description: The image set to use for card illustrations. Leave this empty when using the default API server. Blurred monochrome versions of the official card illustrations are used.
+    optional: true
   - keyname: image_set_password
     field_type: password
     name: Image Set Password
     description: "When hosting your own server and images, you may want to protect access to them with a token (password). If so, enter this password. If you are using the default API server, leave this blank."
+    optional: true
   - keyname: game_sets
     field_type: select
     name: "Games & Expansions"
@@ -58,6 +60,7 @@ custom_fields:
       - Birds of New Zealand promo pack: promoNZ
       - British Birds promo pack: promoUK
       - Birds of U.S.A. promo pack: promoUS
+    optional: true
     multiple: true
   - keyname: locale
     field_type: select
