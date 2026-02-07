@@ -1,4 +1,4 @@
-{% if trmnl.plugin_settings.custom_fields_values.image_set %}
+{% if trmnl.plugin_settings.custom_fields_values.image_set != blank %}
     {% assign _image_set = trmnl.plugin_settings.custom_fields_values.image_set %}
 {% else %}
     {% assign _image_set = "_" %}
