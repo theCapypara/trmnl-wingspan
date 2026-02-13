@@ -12,7 +12,7 @@ use axum::{Json, Router, routing::get};
 use axum_extra::TypedHeader;
 use axum_extra::extract::Query;
 use axum_extra::headers::Host;
-use chrono::{Timelike, Utc};
+use chrono::Utc;
 use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
 use rand_chacha::rand_core::SeedableRng;
@@ -55,7 +55,7 @@ async fn get_current(
     query: Query<GetCurrentParams>,
     host: Option<TypedHeader<Host>>,
 ) -> impl IntoResponse {
-    let now = Utc::now().num_seconds_from_midnight();
+    let now = Utc::now().timestamp() as u64;
     let time_idx = now / state.config.new_bird_interval;
     let remaining_time = state.config.new_bird_interval - (now % state.config.new_bird_interval);
     let locale: Option<Locale> = query
@@ -63,7 +63,7 @@ async fn get_current(
         .as_ref()
         .and_then(|locale| locale.try_into().ok());
 
-    let mut rng = ChaCha8Rng::seed_from_u64(time_idx as u64);
+    let mut rng = ChaCha8Rng::seed_from_u64(time_idx);
 
     let host = host.map(|h| h.0.hostname().to_string()).unwrap_or_default();
     let chosen = if host.starts_with("demo") {

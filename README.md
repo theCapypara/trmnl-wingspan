@@ -4,7 +4,9 @@ A TRMNL plugin to display bird cards from the game Wingspan.
 
 Powered by [Wingsearch](https://github.com/navarog/wingsearch).
 
-| todo: preview image and link will go here
+![Preview image, as rendered on the TRMNL OG](./preview.png)
+
+**Install**: https://trmnl.com/recipes/239594
 
 ## Fork with your own images
 
