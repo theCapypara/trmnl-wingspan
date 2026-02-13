@@ -10,7 +10,7 @@ use axum::http::{HeaderMap, HeaderValue, header};
 use axum::response::{IntoResponse, Redirect};
 use axum::{Json, Router, routing::get};
 use axum_extra::extract::Query;
-use chrono::{Timelike, Utc};
+use chrono::Utc;
 use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
 use rand_chacha::rand_core::SeedableRng;
@@ -52,7 +52,7 @@ async fn get_current(
     State(state): State<Arc<AppState>>,
     query: Query<GetCurrentParams>,
 ) -> impl IntoResponse {
-    let now = Utc::now().num_seconds_from_midnight();
+    let now = Utc::now().timestamp() as u64;
     let time_idx = now / state.config.new_bird_interval;
     let remaining_time = state.config.new_bird_interval - (now % state.config.new_bird_interval);
     let locale: Option<Locale> = query
@@ -60,7 +60,7 @@ async fn get_current(
         .as_ref()
         .and_then(|locale| locale.try_into().ok());
 
-    let mut rng = ChaCha8Rng::seed_from_u64(time_idx as u64);
+    let mut rng = ChaCha8Rng::seed_from_u64(time_idx);
 
     let birds = state.birds_db.values().filter(|bird| {
         query.allowed_set.is_empty() || query.allowed_set.contains(&bird.master.set)

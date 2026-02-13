@@ -7,7 +7,7 @@ pub struct Config {
     pub wingsearch: PathBuf,
     pub default_images: String,
     pub images: HashMap<String, ImageSpec>,
-    pub new_bird_interval: u32,
+    pub new_bird_interval: u64,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
